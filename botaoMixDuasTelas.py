@@ -8,6 +8,7 @@ import cv2 as cv
 def exibe(path_I, path_V):
     cap = cv.imread(path_I)
     cv.namedWindow("OpenCV Window", cv.WINDOW_NORMAL)
+    cv.moveWindow("OpenCV Window", 0, 0)
 
     cv.setWindowProperty("OpenCV Window", cv.WND_PROP_FULLSCREEN, cv.WINDOW_FULLSCREEN)
 
@@ -22,7 +23,7 @@ def exibe(path_I, path_V):
     while True:
         key = cv.waitKey(0) & 0xFF
         key_char = chr(key).lower() if key != -1 else ''  
-        if key_char == 'e':          
+        if key_char == 'e':
             while True:
                 player.play() 
                 estado = player.get_state() 
@@ -31,15 +32,18 @@ def exibe(path_I, path_V):
                     player.set_time(0)
                     break
             player.stop()
-        cv.imshow("OpenCV Window", cap)
+
         if key_char == 'q':
             break
+
 cv.destroyAllWindows()
 
 
 def main():
-    video_path = '/mnt/c/users/anacl/Desktop/Pinacoteca/video1.mp4'
-    imagem_path = '/mnt/c/users/anacl/Desktop/Pinacoteca/imagem.jpg'
+    #video_path = '/home/ana-osias/projeto/output_fundo_preto.mp4'
+    #imagem_path = '/home/ana-osias/projeto/tarsila fundo preto com texto.jpg'
+    video_path = './output_fundo_preto.mp4'
+    imagem_path = './tarsila fundo preto com texto.jpg'
     if os.path.exists(imagem_path):
         exibe(imagem_path,  video_path)
     else:
