@@ -1,10 +1,11 @@
 import vlc
 import os
 import time
+import cv2 as cv
 
 
 # Função para abrir o player de vídeo VLC
-def abrir_player_de_video(video_path):
+def abrir_player_de_video(video_path):  
     instance = vlc.Instance("--no-xlib")
     player = instance.media_player_new()
     media = instance.media_new(video_path)
@@ -27,7 +28,7 @@ def abrir_player_de_video(video_path):
 
 
 def main():
-    video_path = 'c:\Users\anacl\Desktop\PorjPinacoteca\projeto\video.mp4'  
+    video_path = '/home/pinacoteca/Desktop/cod/Pinacoteca-Raspberry/video.mp4'  
     if os.path.exists(video_path):
       abrir_player_de_video(video_path)
     else:
