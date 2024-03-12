@@ -24,8 +24,8 @@ def exibe(path_I, path_V):
         key = cv.waitKey(0) & 0xFF
         key_char = chr(key).lower() if key != -1 else ''  
         if key_char == 'e':
+            player.play() 
             while True:
-                player.play() 
                 estado = player.get_state() 
                 if estado == vlc.State.Ended:
                     player.stop()
@@ -40,10 +40,8 @@ cv.destroyAllWindows()
 
 
 def main():
-    #video_path = '/home/ana-osias/projeto/output_fundo_preto.mp4'
-    #imagem_path = '/home/ana-osias/projeto/tarsila fundo preto com texto.jpg'
-    video_path = './output_fundo_preto.mp4'
-    imagem_path = './tarsila fundo preto com texto.jpg'
+    video_path = '/home/pinacoteca/Desktop/video1.mp4'
+    imagem_path = './imagem.jpg'
     if os.path.exists(imagem_path):
         exibe(imagem_path,  video_path)
     else:
