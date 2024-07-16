@@ -6,12 +6,12 @@ import RPi.GPIO as gpio
 from pynput.keyboard import Key, Controller
 
 ##ALTERE AQUI O CAMINHO PARA O VIDEO E IMAGEM DESEJADOS
-video_path = '/home/pinacoteca/Desktop/video1.mp4'   
-imagem_path = './imagem.jpg'
+video_path = '/home/pinacoteca/Desktop/cod/Pinacoteca-Raspberry/video.mp4'   
+imagem_path = '/home/pinacoteca/Desktop/cod/Pinacoteca-Raspberry/imagem.jpg'
 
 #Instancias para o controle do botao
 keyboard = Controller()
-botaoPin = 26               	            #Esse pino é considerando a numeração BCM da gpio (imagem na internet) 
+botaoPin = 26               	            #Esse pino é considerando a numeração BCM da gpio (imagem na internet) equivale ao mais proximo a entrada USB na borda da placa
 gpio.setmode(gpio.BCM)      	            #Escolhe o modo BCM
 gpio.setup(botaoPin,gpio.IN, gpio.PUD_UP)   #Coloca o pino alto 
 out = False 
@@ -33,11 +33,11 @@ def exibe(path_I, path_V):
 	cv.setWindowProperty("OpenCV Window", cv.WND_PROP_FULLSCREEN, cv.WINDOW_FULLSCREEN)
 
 #Instancia e configuracao da janela de video
-	instance1 = vlc.Instance("--no-xlib ")
-	player = instance1.media_player_new()
-	media = instance1.media_new(path_V)
+	player = vlc.MediaPlayer()
+	player.toggle_fullscreen()
+	media=vlc.Media(path_V)
 	player.set_media(media)
-	player.set_fullscreen(True)
+
 
 	cv.imshow("OpenCV Window", cap)        #Exibe imagem
 	
@@ -45,26 +45,30 @@ def exibe(path_I, path_V):
 	while True:
 		key = cv.waitKey(0) & 0xFF
 		key_char = chr(key).lower() if key != -1 else ''  
-		if key_char == 'e':
+		
+		if key_char == 'e' :
+			FIM = vlc.State.Ended
 			player.play() 
+			time.sleep(2)
+			
 			while True:
 				estado = player.get_state() 
-				if estado == vlc.State.Ended:
+				if estado == FIM:
 					player.stop()
-					player.set_time(0)
+				#	player.set_time(0)
 					break
-			player.stop()
-
+		
 		if key_char == 'q':
 			break
 
 cv.destroyAllWindows()
 
 def main():
-    if os.path.exists(imagem_path):
-        exibe(imagem_path,  video_path)
-    else:
-        print("O arquivo de imagem não foi encontrado.")
+
+	if os.path.exists(imagem_path):
+		exibe(imagem_path,  video_path)
+	else:
+		print("O arquivo de imagem não foi encontrado.")
             
 if __name__ == "__main__":
     main()
