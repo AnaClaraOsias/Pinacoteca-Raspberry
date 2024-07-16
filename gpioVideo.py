@@ -11,7 +11,7 @@ imagem_path = '/home/pinacoteca/Desktop/cod/Pinacoteca-Raspberry/imagem.jpg'
 
 #Instancias para o controle do botao
 keyboard = Controller()
-botaoPin = 26               	            #Esse pino é considerando a numeração BCM da gpio (imagem na internet) equivale ao mais proximo a entrada USB na borda da placa
+botaoPin = 26               	            #Esse pino é considerando a numeração BCM da gpio (imagem na internet) equivale ao segundo pino mais proximo as entradas USB na fileira interna da placa
 gpio.setmode(gpio.BCM)      	            #Escolhe o modo BCM
 gpio.setup(botaoPin,gpio.IN, gpio.PUD_UP)   #Coloca o pino alto 
 out = False 
